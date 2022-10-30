@@ -22,22 +22,17 @@ export class App extends Component {
 
   onSubmitForm = (evt) => {
     evt.preventDefault();
+    
     const { name } = this.state;
     const contactId = nanoid();
+
     const contact = {
       name,
       id: contactId,
     };
-    this.setState((prevState) => {
-       this.state = {
-        ...this.state,
-        contacts: prevState.contacts.push(contact),
-      }
-      console.log('prevState', prevState.contacts);
-    });
-
-    // console.log(`Name ${this.state.name}`);
-    console.log('contact', contact);
+    this.setState(
+      ({ contacts }) => ({contacts: [contact, ...contacts]})
+    );
   }
 
 
@@ -46,6 +41,7 @@ export class App extends Component {
       <div
         style={{
           height: '100vh',
+          padding: '40px',
           fontSize: 40,
           color: '#010101'
         }}
@@ -54,7 +50,7 @@ export class App extends Component {
         onInputChange={this.onInputChange}
         onSubmitForm={this.onSubmitForm}
         />
-        <ContactsList />
+        <ContactsList contacts={this.state.contacts}/>
       </div>
     );
   }
