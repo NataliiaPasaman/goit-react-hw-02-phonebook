@@ -3,7 +3,7 @@ export const App = () => {
     <div
       style={{
         height: '100vh',
-        display: 'flex',
+        // display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         fontSize: 40,
