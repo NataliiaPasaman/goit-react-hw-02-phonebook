@@ -1,6 +1,11 @@
+.formTitle {
+    margin-bottom: 30px;
+    font-size: 42px;
+    font-weight: 700;
+}
+
 .formPhone {
-    padding: 40px;
-    margin: o auto;
+    margin-bottom: 44px;
 }
 
 .inputPhone {

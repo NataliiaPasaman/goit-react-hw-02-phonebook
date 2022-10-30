@@ -4,6 +4,8 @@ import css from "components/PhonebookForm/PhonebookForm.module.css";
 
 export const PhonebookForm = ({ onInputChange, onSubmitForm }) => {
   return (
+<>
+<h2 className={css.formTitle}>Phonebook</h2>
     <form className={css.formPhone} onSubmit={onSubmitForm}>
       <label className={css.labelPhone}>
         Name
@@ -19,6 +21,7 @@ export const PhonebookForm = ({ onInputChange, onSubmitForm }) => {
       </label>
       <button className={css.btnPhone} type="submit">Add contact</button>
     </form>
+</>
   );
 };
 
