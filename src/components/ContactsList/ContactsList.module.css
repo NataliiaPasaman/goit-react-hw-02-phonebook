@@ -16,3 +16,9 @@
 .contacts__item:not(:last-child) {
     margin-bottom: 10px;
 }
+
+.contacts__number {
+    font-size: 26px;
+    font-weight: 600;
+    color: rgb(72, 70, 70);
+}

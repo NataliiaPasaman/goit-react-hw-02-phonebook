@@ -9,7 +9,8 @@ export class App extends Component {
     super();
     this.state = {
       contacts: [],
-      name: ''
+      name: '',
+      number: ''
     }
   }
 
@@ -22,14 +23,16 @@ export class App extends Component {
 
   onSubmitForm = (evt) => {
     evt.preventDefault();
-    
-    const { name } = this.state;
+
+    const { name, number } = this.state;
     const contactId = nanoid();
 
     const contact = {
-      name,
       id: contactId,
+      name,
+      number,
     };
+    console.log('contact', contact);
     this.setState(
       ({ contacts }) => ({contacts: [contact, ...contacts]})
     );

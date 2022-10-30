@@ -8,7 +8,8 @@ export const ContactsList = ({ contacts }) => {
     return contacts.map(contact => {
       return (
         <li className={css.contacts__item} key={contact.id}>
-          {contact.name}
+          {contact.name}: 
+          <span className={css.contacts__number}> {contact.number}</span>
         </li>
       );
     });
