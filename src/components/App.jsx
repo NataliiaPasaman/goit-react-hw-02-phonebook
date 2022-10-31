@@ -20,7 +20,6 @@ import { ContactsList } from "./ContactsList/ContactsList";
  та фільтр пошуку Filter.
 */
 
-
 export class App extends Component {
   constructor() {
     super();
@@ -36,7 +35,18 @@ export class App extends Component {
       name: name,
       number: number,
     };
-    this.setState(({ contacts }) => ({ contacts: [contact, ...contacts] }));
+
+    this.setState(
+      ({ contacts }) => {
+        const findContact = contacts.find(oneContact => oneContact.name === contact.name);
+
+        if(findContact) {
+          alert(`${contact.name} is already in contacts`);
+          return;
+        };
+
+        return {contacts: [contact, ...contacts]}}
+      );
   };
 
   render() {
