@@ -2,23 +2,8 @@ import React from "react";
 import { Component } from "react";
 import { nanoid } from 'nanoid';
 import { ContactForm } from "./ContactForm/ContactForm";
+import { Filter } from "./Filter/Filter";
 import { ContactsList } from "./ContactsList/ContactsList";
-
-/** Додай поле пошуку, яке можна використовувати для фільтрації списку 
- * контактів за ім'ям.
-
-Поле пошуку – це інпут без форми, значення якого записується у 
-стан (контрольований елемент).
-Логіка фільтрації повинна бути нечутливою до регістру. 
-
-
-
-Достатньо виділити чотири компоненти: 
-форма додавання контактів - ContactForm,
-список контактів - ContactList, 
-елемент списку контактів - ItemContactList
- та фільтр пошуку Filter.
-*/
 
 export class App extends Component {
   constructor() {
@@ -29,11 +14,11 @@ export class App extends Component {
     };
   }
 
-  addContact = (name, number) => {
+  hadleSubmit = (name, number) => {
     const contact = {
       id: nanoid(12),
-      name: name,
-      number: number,
+      name,
+      number,
     };
 
     this.setState(
@@ -47,9 +32,22 @@ export class App extends Component {
 
         return {contacts: [contact, ...contacts]}}
       );
-  };
+  }
+  
+  onInputFilterChange = (e) => {
+    this.setState({filter: e.target.value});
+  }
+
+  getFilterContacts = () => {
+    const { contacts, filter } = this.state;
+    const normalizedFilter = filter.toLowerCase();
+    return contacts.filter(contact => contact.name.toLowerCase().includes(normalizedFilter));
+  }
 
   render() {
+
+    const fieldFilter = this.getFilterContacts();
+
     return (
       <div
         style={{
@@ -61,10 +59,16 @@ export class App extends Component {
       >
         <h1>Phonebook</h1>
         <ContactForm
-          addContact={this.addContact}
+          hadleSubmit={this.hadleSubmit}
         />
         <h2>Contacts</h2>
-        <ContactsList contacts={this.state.contacts} />
+        <Filter 
+          onInputFilterChange={this.onInputFilterChange}
+          filter={this.state.filter} 
+          />
+        <ContactsList 
+          contactItems={fieldFilter}
+          contacts={this.state.contacts} />
       </div>
     );
   }

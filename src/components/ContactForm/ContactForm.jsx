@@ -21,23 +21,14 @@ export class ContactForm extends Component {
     evt.preventDefault();
 
     const { name, number } = this.state;
-    this.props.addContact(name, number);
-    
-//Не працює
+    this.props.hadleSubmit(name, number);
+
     this.reset();
   };
 
   reset = () => {
-    return { ...this.state };
+   this.setState({ name: '', number: '' });
   };
-
-  // reset = () => {
-  //   const { name, number } = this.state;
-  //  this.setState({
-  //   name: '',
-  //   number: ''
-  //  });
-  // };
 
   render() {
     return (
@@ -75,5 +66,5 @@ export class ContactForm extends Component {
 }
 
 ContactForm.propTypes = {
-  addContact: PropTypes.func.isRequired,
+  hadleSubmit: PropTypes.func.isRequired,
 };
