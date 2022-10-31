@@ -1,12 +1,47 @@
-import React from "react";
+import React from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
-import css from "components/PhonebookForm/PhonebookForm.module.css";
+import css from 'components/ContactForm/ContactForm.module.css';
 
-export const PhonebookForm = ({ onInputChange, onSubmitForm }) => {
-  return (
-    <>
-      <h2 className={css.formTitle}>Phonebook</h2>
-      <form className={css.formPhone} onSubmit={onSubmitForm}>
+export class ContactForm extends Component {
+  constructor() {
+    super();
+    this.state = {
+      name: '',
+      number: '',
+    };
+  }
+
+  onInputChange = evt => {
+    const { name, value } = evt.currentTarget;
+    this.setState({ [name]: value });
+  };
+
+  onSubmitForm = evt => {
+    evt.preventDefault();
+
+    const { name, number } = this.state;
+    this.props.addContact(name, number);
+    
+//Не працює
+    this.reset();
+  };
+
+  reset = () => {
+    return { ...this.state };
+  };
+
+  // reset = () => {
+  //   const { name, number } = this.state;
+  //  this.setState({
+  //   name: '',
+  //   number: ''
+  //  });
+  // };
+
+  render() {
+    return (
+      <form className={css.formPhone} onSubmit={this.onSubmitForm}>
         <label className={css.labelPhone}>
           Name
           <input
@@ -16,7 +51,7 @@ export const PhonebookForm = ({ onInputChange, onSubmitForm }) => {
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             required
-            onChange={onInputChange}
+            onChange={this.onInputChange}
           />
         </label>
         <label className={css.labelPhone}>
@@ -28,18 +63,17 @@ export const PhonebookForm = ({ onInputChange, onSubmitForm }) => {
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
-            onChange={onInputChange}
+            onChange={this.onInputChange}
           />
         </label>
         <button className={css.btnPhone} type="submit">
           Add contact
         </button>
       </form>
-    </>
-  );
-};
-
-PhonebookForm.propTypes = {
-    onInputChange: PropTypes.func.isRequired,
-    onSubmitForm: PropTypes.func.isRequired,
+    );
+  }
 }
+
+ContactForm.propTypes = {
+  addContact: PropTypes.func.isRequired,
+};

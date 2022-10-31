@@ -1,43 +1,43 @@
 import React from "react";
 import { Component } from "react";
 import { nanoid } from 'nanoid';
-import { PhonebookForm } from "./PhonebookForm/PhonebookForm";
+import { ContactForm } from "./ContactForm/ContactForm";
 import { ContactsList } from "./ContactsList/ContactsList";
+
+/** Додай поле пошуку, яке можна використовувати для фільтрації списку 
+ * контактів за ім'ям.
+
+Поле пошуку – це інпут без форми, значення якого записується у 
+стан (контрольований елемент).
+Логіка фільтрації повинна бути нечутливою до регістру. 
+
+
+
+Достатньо виділити чотири компоненти: 
+форма додавання контактів - ContactForm,
+список контактів - ContactList, 
+елемент списку контактів - ItemContactList
+ та фільтр пошуку Filter.
+*/
+
 
 export class App extends Component {
   constructor() {
     super();
     this.state = {
       contacts: [],
-      name: '',
-      number: ''
-    }
-  }
-
-
-  onInputChange = (evt) => {
-    const { name, value } = evt.currentTarget;
-    this.setState({ [name]: value });
-  }
-
-
-  onSubmitForm = (evt) => {
-    evt.preventDefault();
-
-    const { name, number } = this.state;
-    const contactId = nanoid();
-
-    const contact = {
-      id: contactId,
-      name,
-      number,
+      filter: '',
     };
-    console.log('contact', contact);
-    this.setState(
-      ({ contacts }) => ({contacts: [contact, ...contacts]})
-    );
   }
 
+  addContact = (name, number) => {
+    const contact = {
+      id: nanoid(12),
+      name: name,
+      number: number,
+    };
+    this.setState(({ contacts }) => ({ contacts: [contact, ...contacts] }));
+  };
 
   render() {
     return (
@@ -46,14 +46,15 @@ export class App extends Component {
           height: '100vh',
           padding: '40px',
           fontSize: 40,
-          color: '#010101'
+          color: '#010101',
         }}
       >
-        <PhonebookForm 
-        onInputChange={this.onInputChange}
-        onSubmitForm={this.onSubmitForm}
+        <h1>Phonebook</h1>
+        <ContactForm
+          addContact={this.addContact}
         />
-        <ContactsList contacts={this.state.contacts}/>
+        <h2>Contacts</h2>
+        <ContactsList contacts={this.state.contacts} />
       </div>
     );
   }
