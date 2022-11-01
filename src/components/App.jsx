@@ -21,28 +21,28 @@ export class App extends Component {
       number,
     };
 
-    this.setState(
-      ({ contacts }) => {
-        const findContact = contacts.find(oneContact => oneContact.name === contact.name);
+    const isfindContact = this.state.contacts
+    .find(oneContact => oneContact.name === contact.name);
 
-        if(findContact) {
-          alert(`${contact.name} is already in contacts`);
-          return;
-        };
+    if (isfindContact) {
+      alert(`${contact.name} is already in contacts`);
+      return;
+    }
 
-        return {contacts: [contact, ...contacts]}}
-      );
-  }
-  
-  onInputFilterChange = (e) => {
-    this.setState({filter: e.target.value});
-  }
+    this.setState(({ contacts }) => ({ contacts: [contact, ...contacts]}));
+  };
+
+  onInputFilterChange = e => {
+    this.setState({ filter: e.target.value });
+  };
 
   getFilterContacts = () => {
     const { contacts, filter } = this.state;
     const normalizedFilter = filter.toLowerCase();
-    return contacts.filter(contact => contact.name.toLowerCase().includes(normalizedFilter));
-  }
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(normalizedFilter)
+    );
+  };
 
   deleteContact = id => {
     this.setState(prevState => ({
@@ -63,18 +63,17 @@ export class App extends Component {
         }}
       >
         <h1>Phonebook</h1>
-        <ContactForm
-          hadleSubmit={this.hadleSubmit}
-        />
+        <ContactForm hadleSubmit={this.hadleSubmit} />
         <h2>Contacts</h2>
-        <Filter 
+        <Filter
           onInputFilterChange={this.onInputFilterChange}
-          filter={this.state.filter} 
-          />
-        <ContactsList 
+          filter={this.state.filter}
+        />
+        <ContactsList
           contactItems={fieldFilter}
           deleteContact={this.deleteContact}
-          contacts={this.state.contacts} />
+          contacts={this.state.contacts}
+        />
       </div>
     );
   }
