@@ -7,7 +7,6 @@ export const ItemContactList = ({ contacts, deleteContact }) => {
   const addContactItem = contacts => {
 
     return contacts.map(contact => {
-      // console.log('contact', contact)
       return (
         <li className={css.contacts__item} key={contact.id}>
           {contact.name}:
@@ -16,14 +15,6 @@ export const ItemContactList = ({ contacts, deleteContact }) => {
             type="button"
             className={css.btnDelete}
             onClick={() => deleteContact(contact.id)}
-
-            // onClick={
-            //   () => {
-            //   console.log('Delete', contact);
-            //   const position = contacts.indexOf(contact);
-            //   contacts.splice(position, 1);
-            //   console.log('contacts onClick', contacts);
-            // }}
             >
             Delete
           </button>

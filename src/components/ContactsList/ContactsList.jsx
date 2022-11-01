@@ -9,7 +9,7 @@ export const ContactsList = ({ contacts, contactItems, deleteContact }) => {
     <ul className={css.contacts__list}>
       <ItemContactList 
         contacts={contactItems} 
-        deteteContact={deleteContact} 
+        deleteContact={deleteContact} 
      />
     </ul>
   );
